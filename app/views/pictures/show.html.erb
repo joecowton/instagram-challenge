@@ -2,7 +2,9 @@
 
 <p>
   <strong>Image:</strong>
-  <%= @picture.image %>
+</p>
+<p>
+<td><img src="<%= @picture.image %>" alt=""></td>
 </p>
 
 <%= link_to 'Edit', edit_user_picture_path( current_user, @picture) %> |
