@@ -1,9 +1,9 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Text:</strong>
-  <%= @comment.text %>
+  <strong>Comment:</strong>
+  <%= @comment.comment %>
 </p>
 
-<%= link_to 'Edit', edit_comment_path(@comment) %> |
-<%= link_to 'Back', comments_path %>
+<%= link_to 'Edit', edit_picture_comment_path(@picture, @comment) %> |
+<%= link_to 'Back', picture_comments_path(@picture) %>

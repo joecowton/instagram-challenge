@@ -9,3 +9,4 @@
 
 <%= link_to 'Edit', edit_user_picture_path( current_user, @picture) %> |
 <%= link_to 'Back', user_pictures_path(current_user) %>
+<%= link_to 'Add Comment', new_picture_comment_path(@picture) %>
