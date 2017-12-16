@@ -1,18 +1,31 @@
 class PicturesController < ApplicationController
   before_action :set_picture, only: [:show, :edit, :update, :destroy]
-
   # GET /pictures
   # GET /pictures.json
   def index
-    @pictures = current_user.pictures.all
-    p current_user.pictures.all
+    @pictures = Picture.all
+  end
+
+  def upvote
+    @picture = Picture.find(params[:id])
+    @picture.upvote_by current_user
+    redirect_to user_pictures_path(current_user)
+  end
+
+  def downvote
+    @picture = Picture.find(params[:id])
+    @picture.downvote_by current_user
+    redirect_to user_pictures_path(current_user)
+  end
+
+  def score
+    self.get_upvotes.size - self.get_downvotes.size
   end
 
   # GET /pictures/1
   # GET /pictures/1.json
   def show
     @picture = current_user.pictures.find(params[:id])
-    p @picture
   end
 
   # GET /pictures/new

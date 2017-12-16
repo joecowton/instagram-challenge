@@ -10,9 +10,9 @@ img {
     }
 </style>
 <p>
-<td><img src="<%= @picture.image %>" alt=""></td>
 </p>
 <% @picture.comments.each do |comment| %>
+<td><img src="<%= picture.image %>" alt=""></td>
 <td><%= comment.user.email %></td><br>
 <td><%= comment.comment %></td><br>
 <% end %>

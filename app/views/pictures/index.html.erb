@@ -5,7 +5,7 @@
 <table>
   <thead>
     <tr>
-      <th>Image</th>
+
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,10 +17,26 @@
 </style>
 
   <tbody>
+
     <% @pictures.each do |picture| %>
-      <tr>
-        <td><%= link_to image_tag(picture.image), picture %></td>
-      </tr>
+
+    <tr>
+      <h4><%= link_to picture.id, picture %>
+        Submitted <%= time_ago_in_words(picture.created_at) %>
+        by <%= picture.user.email %>
+      </h4>
+
+      <%= link_to image_tag(picture.image), picture %>
+      <%= link_to like_picture_path(picture), method: :put do %>
+        Upvote
+        <%= picture.get_upvotes.size %>
+      <% end %>
+
+      <%= link_to dislike_picture_path(picture), method: :put do %>
+        Downvote
+        <%= picture.get_downvotes.size %>
+      <% end %>
+    </tr>
     <% end %>
 
     <% if user_signed_in? %>
