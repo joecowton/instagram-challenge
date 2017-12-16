@@ -18,24 +18,31 @@
 
   <tbody>
 
-    <% @pictures.each do |picture| %>
+    <% @pictures.reverse.each do |picture| %>
 
     <tr>
-      <h4><%= link_to picture.id, picture %>
-        Submitted <%= time_ago_in_words(picture.created_at) %>
-        by <%= picture.user.email %>
+      <h4>
+          <%= picture.user.email %><br>
+          <%= time_ago_in_words(picture.created_at)%> ago
       </h4>
 
-      <%= link_to image_tag(picture.image), picture %>
+      <%= link_to image_tag(picture.image), like_picture_path(picture), method: :put %><br>
+      <%= link_to 'Destroy', [current_user, picture], confirm: 'Are you sure?', method: :delete %></td>
       <%= link_to like_picture_path(picture), method: :put do %>
-        Upvote
-        <%= picture.get_upvotes.size %>
+        Likes
+      <%= picture.count_votes_up %>
       <% end %>
-
       <%= link_to dislike_picture_path(picture), method: :put do %>
-        Downvote
-        <%= picture.get_downvotes.size %>
+        Unlike
       <% end %>
+        <%= link_to 'Add Comment', new_picture_comment_path(picture) %><br>
+        <% picture.comments.each do |comment| %>
+          <%= comment.user.email %>
+        <%= comment.comment.slice(0,50) %>
+        <% end %>
+
+
+
     </tr>
     <% end %>
 
@@ -48,6 +55,7 @@
         <%= link_to('Login', new_user_session_path)  %>
       </li>
     <% end %>
+
   </tbody>
 </table>
 

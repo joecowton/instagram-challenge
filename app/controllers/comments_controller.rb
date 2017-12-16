@@ -13,7 +13,6 @@ class CommentsController < ApplicationController
   def show
     load_picture
     @comment = @picture.comments.find(params[:picture_id])
-    p @comment
   end
 
   # GET /comments/new
@@ -36,7 +35,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @picture, notice: 'Comment was successfully created.' }
+        format.html { redirect_to pictures_url  , notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }
@@ -69,7 +68,7 @@ class CommentsController < ApplicationController
     @comment = @picture.comments.find(params[:id])
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to picture_comments_url, notice: 'Comment was successfully destroyed.' }
+      format.html { redirect_to picture_comments_url, notice: 'Comment was successfully deleted.' }
       format.json { head :no_content }
     end
   end
