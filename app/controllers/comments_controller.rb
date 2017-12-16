@@ -1,17 +1,18 @@
 class CommentsController < ApplicationController
-  before_action :load_picture, :set_comment, only: [:show, :create, :edit, :update, :destroy]
+  before_action :load_picture, :load_user, only: [:show, :create, :edit, :update, :destroy]
 
   # GET /comments
   # GET /comments.json
   def index
+    load_picture
     @comments = @picture.comments.all
   end
 
   # GET /comments/1
   # GET /comments/1.json
   def show
-
-    @comment = @picture.comments.find(params[:id])
+    load_picture
+    @comment = @picture.comments.find(params[:picture_id])
     p @comment
   end
 
@@ -23,17 +24,19 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit
   def edit
-    @comment = @picture.comments.find(params[:id])
+    load_picture
+    @comment = @picture.comments.find(params[:picture_id])
   end
 
   # POST /comments
   # POST /comments.json
   def create
+    load_picture
     @comment = @picture.comments.new(comment_params)
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
+        format.html { redirect_to @picture, notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }
@@ -45,7 +48,7 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
-
+    load_picture
     @comment = @picture.comments.find(params[:id])
 
     respond_to do |format|
@@ -62,6 +65,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   # DELETE /comments/1.json
   def destroy
+    load_picture
     @comment = @picture.comments.find(params[:id])
     @comment.destroy
     respond_to do |format|
@@ -76,12 +80,19 @@ class CommentsController < ApplicationController
       @picture = Picture.find(params[:picture_id])
     end
 
+    def load_user
+      @user = User.find(current_user.id)
+      p @user
+    end
+
     def set_comment
-      @comment = Comment.find(params[:id])
+      load_picture
+      @comment = Comment.find(params[:picture_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:comment)
+      load_picture
+      params.require(:comment).permit(:comment, :picture_id, :user_id)
     end
 end

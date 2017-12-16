@@ -3,9 +3,19 @@
 <p>
   <strong>Image:</strong>
 </p>
+<style media="screen">
+img {
+      width: 200px;
+      height: auto;
+    }
+</style>
 <p>
 <td><img src="<%= @picture.image %>" alt=""></td>
 </p>
+<% @picture.comments.each do |comment| %>
+<td><%= comment.user.email %></td><br>
+<td><%= comment.comment %></td><br>
+<% end %>
 
 <%= link_to 'Edit', edit_user_picture_path( current_user, @picture) %> |
 <%= link_to 'Back', user_pictures_path(current_user) %>

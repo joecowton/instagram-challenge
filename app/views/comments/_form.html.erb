@@ -18,13 +18,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :picture_id %>
-    <%= form.text_field :picture_id, id: :comment_picture_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id, id: :comment_user_id %>
+    <%= form.hidden_field :picture_id, id: :comment_picture_id %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
   </div>
 
 
