@@ -12,9 +12,9 @@ img {
 <p>
 </p>
 <% @picture.comments.each do |comment| %>
-<img src="<%= @picture.image %>" alt="">
-<td><%= comment.user.email %></td><br>
-<td><%= comment.comment %></td><br>
+  <img src="<%= @picture.image %>" alt="">
+  <td><%= comment.user.email %></td><br>
+  <td><%= comment.comment %></td><br>
 <% end %>
 
 

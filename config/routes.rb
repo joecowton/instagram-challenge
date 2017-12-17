@@ -18,6 +18,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :comments do
+    member do
+      put "like", to: "comments#upvote"
+      put "dislike", to: "comments#downvote"
+    end
+  end
+
 
   root 'pictures#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

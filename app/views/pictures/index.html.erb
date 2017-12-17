@@ -10,7 +10,6 @@
     <script type="text/javascript" src="js/modernizr.js"></script>
 </head>
 
-</html>
 
 
   </thead>
@@ -23,6 +22,7 @@
 
   <tbody>
 
+
       <% @pictures.reverse.each do |picture| %>
       <h6>
           <%= picture.user.email %><br>
@@ -31,17 +31,29 @@
 
       <%= link_to image_tag(picture.image), like_picture_path(picture), method: :put %><br>
       <%= link_to 'Delete', [current_user, picture], confirm: 'Are you sure?', method: :delete %></td>
-      <%= link_to like_picture_path(picture), method: :put do %>
-        Likes
-      <%= picture.count_votes_up %>
-      <% end %>
-      <%= link_to dislike_picture_path(picture), method: :put do %>
-        Unlike
-      <% end %>
+
+        <%= link_to like_picture_path(picture), method: :put do %>
+          Likes
+        <%= picture.count_votes_up %>
+        <% end %>
+        <%= link_to dislike_picture_path(picture), method: :put do %>
+          Unlike
+        <% end %>
+
+
+
+        <br>
         <%= link_to 'Add Comment', new_picture_comment_path(picture) %><br>
         <% picture.comments.each do |comment| %>
           <%= comment.user.email %>
         <%= comment.comment.slice(0,50) %>
+          <%= link_to like_comment_path(comment), method: :put do %>
+              Likes
+            <%= comment.count_votes_up %>
+          <% end %>
+          <%= link_to dislike_comment_path(comment), method: :put do %>
+            Unlike
+          <% end %>
         <br>
         <% end %>
 
@@ -49,3 +61,4 @@
 
   </tbody>
 </table>
+</html>

@@ -4,7 +4,8 @@ class PicturesController < ApplicationController
   # GET /pictures.json
   def index
     @pictures = Picture.all
-    p @pictures
+    @picture = current_user.pictures.new
+
   end
 
   def upvote

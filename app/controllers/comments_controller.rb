@@ -8,6 +8,18 @@ class CommentsController < ApplicationController
     @comments = @picture.comments.all
   end
 
+  def upvote
+    @comment = Comment.find(params[:id])
+    @comment.upvote_by current_user
+    redirect_to user_pictures_path(current_user)
+  end
+
+  def downvote
+    @comment = Comment.find(params[:id])
+    @comment.downvote_by current_user
+    redirect_to user_pictures_path(current_user)
+  end
+
   # GET /comments/1
   # GET /comments/1.json
   def show
