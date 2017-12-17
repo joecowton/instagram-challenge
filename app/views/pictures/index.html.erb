@@ -4,30 +4,33 @@
 
 <table>
   <thead>
-    <tr>
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700|Kaushan+Script|Montserrat' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/modernizr.js"></script>
+</head>
 
-      <th colspan="3"></th>
-    </tr>
+</html>
+
+
   </thead>
   <style media="screen">
-    img {
-      width: 200px;
-      height: auto;
-    }
-</style>
+      img {
+        width: 200px;
+        height: auto;
+      }
+  </style>
 
   <tbody>
 
-    <% @pictures.reverse.each do |picture| %>
-
-    <tr>
-      <h4>
+      <% @pictures.reverse.each do |picture| %>
+      <h6>
           <%= picture.user.email %><br>
           <%= time_ago_in_words(picture.created_at)%> ago
-      </h4>
+      </h6>
 
       <%= link_to image_tag(picture.image), like_picture_path(picture), method: :put %><br>
-      <%= link_to 'Destroy', [current_user, picture], confirm: 'Are you sure?', method: :delete %></td>
+      <%= link_to 'Delete', [current_user, picture], confirm: 'Are you sure?', method: :delete %></td>
       <%= link_to like_picture_path(picture), method: :put do %>
         Likes
       <%= picture.count_votes_up %>
@@ -39,26 +42,10 @@
         <% picture.comments.each do |comment| %>
           <%= comment.user.email %>
         <%= comment.comment.slice(0,50) %>
+        <br>
         <% end %>
 
-
-
-    </tr>
-    <% end %>
-
-    <% if user_signed_in? %>
-      <li>
-        <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
-      </li>
-    <% else %>
-      <li>
-        <%= link_to('Login', new_user_session_path)  %>
-      </li>
     <% end %>
 
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Picture', new_user_picture_path(current_user) %>
