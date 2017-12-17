@@ -1,18 +1,19 @@
+<!doctype html>
+<html lang="en">
+
 <p id="notice"><%= notice %></p>
 
 <h1>Pictures</h1>
 
-<table>
-  <thead>
-    <meta name="viewport" content="width=device-width,user-scalable=no">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link href='http://fonts.googleapis.com/css?family=Lato:400,700|Kaushan+Script|Montserrat' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script type="text/javascript" src="js/modernizr.js"></script>
-</head>
-
-
-
-  </thead>
+  </head>
   <style media="screen">
       img {
         width: 200px;
@@ -20,45 +21,45 @@
       }
   </style>
 
-  <tbody>
+  <body>
+    <div class="container-fluid">
+      <% @pictures.reverse.each_slice(3) do |pictures| %>
+      <div class="row">
+        <% pictures.each do |picture| %>
+          <div class="col-md-3">
+            <%= picture.user.email %><br>
+            <%= time_ago_in_words(picture.created_at)%> ago<br>
+            <%= link_to image_tag(picture.image), like_picture_path(picture), method: :put %><br>
+            <%= link_to 'Delete', [current_user, picture], confirm: 'Are you sure?', method: :delete %><br>
+              <%= link_to like_picture_path(picture), method: :put do %><br>
+                Likes
+                <%= picture.count_votes_up %>
+              <% end %>
+
+                <%= link_to dislike_picture_path(picture), method: :put do %>
+                  Unlike
+                <% end %><br>
+
+              <%= link_to 'Add Comment', new_picture_comment_path(picture) %>
+
+              <% picture.comments.each do |comment| %>
+                <%= comment.user.email %>
+                <%= comment.comment.slice(0,50) %>
+
+                  <%= link_to like_comment_path(comment), method: :put do %>Likes
+                  <%= comment.count_votes_up %>
+                  <% end %>
+
+                  <%= link_to dislike_comment_path(comment), method: :put do %>
+                    Unlike
+                  <% end %>
+              <% end %>
 
 
-      <% @pictures.reverse.each do |picture| %>
-      <h6>
-          <%= picture.user.email %><br>
-          <%= time_ago_in_words(picture.created_at)%> ago
-      </h6>
-
-      <%= link_to image_tag(picture.image), like_picture_path(picture), method: :put %><br>
-      <%= link_to 'Delete', [current_user, picture], confirm: 'Are you sure?', method: :delete %></td>
-
-        <%= link_to like_picture_path(picture), method: :put do %>
-          Likes
-        <%= picture.count_votes_up %>
+          </div>
         <% end %>
-        <%= link_to dislike_picture_path(picture), method: :put do %>
-          Unlike
-        <% end %>
+      </div>
+      <% end %>
+    </body>
 
-
-
-        <br>
-        <%= link_to 'Add Comment', new_picture_comment_path(picture) %><br>
-        <% picture.comments.each do |comment| %>
-          <%= comment.user.email %>
-        <%= comment.comment.slice(0,50) %>
-          <%= link_to like_comment_path(comment), method: :put do %>
-              Likes
-            <%= comment.count_votes_up %>
-          <% end %>
-          <%= link_to dislike_comment_path(comment), method: :put do %>
-            Unlike
-          <% end %>
-        <br>
-        <% end %>
-
-    <% end %>
-
-  </tbody>
-</table>
 </html>
