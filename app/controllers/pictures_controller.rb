@@ -4,20 +4,19 @@ class PicturesController < ApplicationController
   # GET /pictures.json
   def index
     @pictures = Picture.all
-    @picture = current_user.pictures.new
-
+    p @pictures
   end
 
   def upvote
     @picture = Picture.find(params[:id])
     @picture.upvote_by current_user
-    redirect_to user_pictures_path(current_user)
+    redirect_to @picture
   end
 
   def downvote
     @picture = Picture.find(params[:id])
     @picture.downvote_by current_user
-    redirect_to user_pictures_path(current_user)
+    redirect_to @picture
   end
 
   def score
@@ -93,6 +92,7 @@ class PicturesController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_picture
       @picture = Picture.find(params[:id])

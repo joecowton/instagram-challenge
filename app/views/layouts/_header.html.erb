@@ -1,0 +1,15 @@
+
+
+
+
+<nav class="navbar navbar-light bg-faded">
+    <div class="container" >
+      <a class="navbar-brand" href="/"> INSTAGRAM</a>
+        <% if user_signed_in? %>
+          <a <%= link_to('Logout', destroy_user_session_path, method: :delete, class: "btn-btn-primary") %></a >
+          <a <%= link_to 'Add Picture', new_user_picture_path(current_user),class: "btn-btn-primary" %></a>
+        <% else %>
+          <a <%= link_to('Login', new_user_session_path)  %></a>
+        <% end %>
+    </div>
+</nav>

@@ -1,20 +1,30 @@
 <p id="notice"><%= notice %></p>
+  <style media="screen">
+  img {
+        width: 100%;
+        height: auto;
+      }
+  </style>
+  <%= @picture.user.email %>
+  <%= time_ago_in_words(@picture.created_at)%> ago<br>
 
-
-<style media="screen">
-img {
-      width: 200px;
-      height: auto;
-    }
-</style>
-<p>
-</p>
-<% @picture.comments.each do |comment| %>
   <img src="<%= @picture.image %>" alt="">
-  <td><%= comment.user.email %></td><br>
-  <td><%= comment.comment %></td><br>
-<% end %>
+    <%= link_to like_picture_path(@picture), method: :put do %><br>
+      Likes
+      <%= @picture.count_votes_up %>
+      <% end %>
+
+      <%= link_to dislike_picture_path(@picture), method: :put do %>
+        Unlike
+      <% end %><br>
+
+      <% @picture.comments.each do |comment| %>
+      <%= comment.user.email %>
+      <%= comment.comment.slice(0,50) %><br>
+      <% end %><br>
+    <%= link_to 'Comment', new_picture_comment_path(@picture) %>
 
 
-<td><%= link_to 'Destroy', [current_user, @picture], confirm: 'Are you sure?', method: :delete %></td>
-<%= link_to 'Back', user_pictures_path(current_user) %>
+
+  <%= link_to 'Delete', [current_user, @picture], confirm: 'Are you sure?', method: :delete %>
+  <%= link_to 'Back', user_pictures_path(current_user) %>
