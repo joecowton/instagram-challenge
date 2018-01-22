@@ -14,6 +14,47 @@ ActiveRecord::Schema.define(version: 20171216132331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "dblink"
+  enable_extension "xml2"
+  enable_extension "ltree"
+  enable_extension "pgstattuple"
+  enable_extension "tablefunc"
+  enable_extension "fuzzystrmatch"
+  enable_extension "citext"
+  enable_extension "uuid-ossp"
+  enable_extension "pgcrypto"
+  enable_extension "pg_trgm"
+  enable_extension "intarray"
+  enable_extension "hstore"
+  enable_extension "dict_int"
+  enable_extension "btree_gin"
+  enable_extension "pgrowlocks"
+  enable_extension "cube"
+  enable_extension "earthdistance"
+  enable_extension "btree_gist"
+  enable_extension "dict_xsyn"
+  enable_extension "unaccent"
+  enable_extension "pg_stat_statements"
+  enable_extension "plv8"
+  enable_extension "postgis"
+
+  create_table "Products", id: :serial, force: :cascade do |t|
+    t.string "title", limit: 255, null: false
+    t.integer "price", null: false
+    t.string "image", limit: 255, null: false
+    t.datetime "createdAt", null: false
+    t.datetime "updatedAt", null: false
+    t.integer "typeId"
+  end
+
+  create_table "SequelizeMeta", primary_key: "name", id: :string, limit: 255, force: :cascade do |t|
+  end
+
+  create_table "Types", id: :serial, force: :cascade do |t|
+    t.string "title", limit: 255, null: false
+    t.datetime "createdAt", null: false
+    t.datetime "updatedAt", null: false
+  end
 
   create_table "comments", force: :cascade do |t|
     t.string "comment"
@@ -31,6 +72,13 @@ ActiveRecord::Schema.define(version: 20171216132331) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_pictures_on_user_id"
+  end
+
+  create_table "spatial_ref_sys", primary_key: "srid", id: :integer, default: nil, force: :cascade do |t|
+    t.string "auth_name", limit: 256
+    t.integer "auth_srid"
+    t.string "srtext", limit: 2048
+    t.string "proj4text", limit: 2048
   end
 
   create_table "users", force: :cascade do |t|
@@ -62,4 +110,5 @@ ActiveRecord::Schema.define(version: 20171216132331) do
     t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
   end
 
+  add_foreign_key "Products", "\"Types\"", column: "typeId", name: "Products_typeId_fkey", on_delete: :cascade
 end
