@@ -9,7 +9,7 @@ $ rails db:setup
 $ rails s
 -> http://localhost:3000/
 ```
-![App](/img/1.png)
-![App](/img/2.png)
-![App](/img/3.png)
-![App](/img/4.png)
+![App](/1.png)
+![App](/2.png)
+![App](/3.png)
+![App](/4.png)
